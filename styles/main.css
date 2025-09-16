@@ -1,0 +1,215 @@
+main {
+  display: flex;
+  flex-direction: column;
+
+  & .left-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+  }
+
+  & .weather-info {
+    background: url(../assets/images/bg-today-small.svg) no-repeat center;
+    background-size: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: .75em;
+    padding: 2.5em 1.5em;
+    margin-bottom: 1.25em;
+
+    & .location-info {
+      text-align: center;
+      margin-top: 2.5em;
+      margin-bottom: 1em;
+
+      .location {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: .6rem;
+      }
+
+      .date {
+        font-size: 1.13em;
+        opacity: .8;
+      }
+    }
+
+    & .temperature-container {
+      display: flex;
+      align-items: center;
+      gap: 1.25em;
+
+      img {
+        height: 7.5em;
+      }
+
+      p {
+        font-size: clamp(4em, calc(10vw + 3em), 6em);
+        font-weight: 600;
+        font-style: italic;
+        letter-spacing: -2%;
+      }
+    }
+  }
+
+  & .weather-details-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1em;
+    margin-bottom: 2rem;
+
+    & div {
+      background-color: var(--n-800);
+      padding: 1.25em;
+      border-radius: .75em;
+      border: 1px solid var(--n-600);
+
+      p:nth-child(1) {
+        margin-bottom: 1.5em;
+        color: var(--n-300);
+        font-size: 1.13rem;
+      }
+
+      p:nth-child(2) {
+        font-weight: 300;
+        font-size: 2rem;
+      }
+    }
+  }
+
+  .daily-forecast-container {
+
+    & .legend {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.25em;
+    }
+
+    & .day {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1em;
+
+      & .daily {
+        background-color: var(--n-800);
+        border-radius: .75em;
+        padding: 1em 0.6em;
+        border: 1px solid var(--n-600);
+
+        & .day-name {
+          text-align: center;
+          margin-bottom: 1em;
+          font-size: 1.1rem;
+        }
+
+        & .weather-condition {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 1em;
+        }
+
+        & .temperature {
+          display: flex;
+          font-size: 1em;
+          width: 100%;
+
+          & p:nth-child(1) {
+            flex: 1;
+          }
+        }
+      }
+
+      & .weather-condition img {
+        height: 3.75em;
+      }
+    }
+  }
+
+  & .right-section {
+    background-color: var(--n-800);
+    border-radius: .75em;
+    padding: 1.25em 1em;
+    height: 43em;
+    overflow-y: auto;
+    margin-bottom: 3em;
+
+    & .top-part {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1em;
+
+      @media (width < 350px) {
+        gap: 1.25em;
+      }
+
+      & .top-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        flex: 1;
+      }
+
+      & .hourly-forecast-dropdown-menu {
+        position: relative;
+        cursor: pointer;
+
+        & .dropdown {
+          position: absolute;
+          background-color: var(--n-800);
+          border: 1px solid var(--n-600);
+          border-radius: .75em;
+          padding: .5em;
+          right: 0;
+          left: -60%;
+          top: 2.5em;
+          box-shadow: 0 .5em 1em var(--box-shadow);
+          display: none;
+
+          & button {
+            width: 100%;
+            text-align: left;
+            padding: .6em .5em;
+            border-radius: .5em;
+            background-color: transparent;
+            color: var(--white);
+            border: none;
+            font: var(--main-font) 1rem;
+            margin-bottom: .25em;
+            
+            &:hover {
+              background-color: var(--n-700);
+            }
+          }
+        }
+      }
+
+      & .container {
+        display: flex;
+        gap: .75em;
+        padding: .5em 1em;
+        background-color: var(--n-600);
+        border-radius: .5em;
+      }
+    }
+
+    & .hourly-forecast-data {
+      display: flex;
+      margin-bottom: 1em;
+      background-color: var(--n-700);
+      border: 1px solid var(--n-600);
+      padding: 0.625em 1em 0.625em 0.75em;
+      border-radius: .5em;
+      gap: .5em;
+      align-items: center;
+
+      & img {
+        height: 2.5em;
+      }
+
+      & p:nth-child(2) {
+        flex: 1;
+      }
+    }
+  }
+}

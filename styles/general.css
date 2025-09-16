@@ -1,0 +1,59 @@
+@font-face{
+  font-family: 'DM Sans';
+  src: url(../assets/fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 300 700;
+}
+
+@font-face{
+  font-family: 'DM Sans';
+  src: url(../assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz\,wght.ttf) format('truetype');
+  font-style: italic;
+  font-weight: 600;
+}
+
+@font-face{
+  font-family: 'Bric';
+  src: url(../assets/fonts/Bricolage_Grotesque/static/BricolageGrotesque-Bold.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+:root {
+  --n-900: hsl(243, 96%, 9%);
+  --n-800: hsl(243, 27%, 20%);
+  --n-700: hsl(243, 23%, 24%);
+  --n-600: hsl(243, 23%, 30%);
+  --n-300: hsl(240, 6%, 70%);
+  --n-200: hsl(250, 6%, 84%);
+  --white: hsl(0, 0%, 100%);
+  --orange: hsl(28, 100%, 52%);
+  --light-blue: hsl(233, 67%, 56%);
+  --blue-dark: hsl(248, 70%, 36%);
+  --main-font: 'DM Sans', 'Arial';
+  --secondary-font: 'Bric', 'Arial';
+  --box-shadow: rgba(2, 1, 44, .32);
+}
+
+html {
+  font-family: var(--main-font);
+  font-size: 1rem;
+  color: var(--white);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p, body, h1 {
+  margin: 0
+}
+
+body {
+  padding: 1rem 1rem 0 1rem;
+  background-color: var(--n-900);
+}
+
+button {
+  cursor: pointer;
+}
