@@ -2,65 +2,237 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+
+  <link rel = "stylesheet" href = "styles/landing-page.css">
   
   <title>Frontend Mentor | Weather app</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
 </head>
 <body>
+  <header>
 
-  Units
+    <div class = "logo">
+      <img src = "assets/images/logo.svg" decoding = "sync">
+    </div>
 
-  Switch to Imperial/Metric
+    <div class = "unit-dropdown-menu">
+      <div class = "container">
+        <img class = "units-icon" src = "assets/images/icon-units.svg" decoding = "sync" alt = "logo">
+        <p>Units</p>
+        <img src = "assets/images/icon-dropdown.svg" decoding = "sync" class = "unit-dropdown" aria-hidden = "true">
+      </div>
 
-  Temperature
+    </div>
+  </header>
 
-  Celsius (°C)
-  Fahrenheit (°F)
+  <section class = "prompt">
+    <div class = "prompt-div">
+      <p>How's the sky looking today?</p>
+    </div>
 
-  Wind Speed
+    <div class = "input-elem">
+      <input placeholder = "Search for a place" class = "search-place">
+      <button class = "search-place-btn">Search</button>
+    </div>
+  </section>
 
-  km/h
-  mph
+  <main>
+    <div class = "left-section">
 
-  Precipitation
+      <div class = "weather-info">
 
-  Millimeters (mm)
-  Inches (in)
+        <div class = "location-info">
+          <p>Berlin, Germany</p>
+          <p>Tuesday, Aug 5, 2025</p>
+        </div>
+        <div class = "temperature-container">
+          <img src = "assets/images/icon-sunny.webp" alt = "sunny" loading = "lazy" decoding = "async">
+          <p>68&deg;</p>
+        </div>
 
-  How's the sky looking today?
+      </div>
+      <div class = "weather-details-container">
+        <div class = "feels-like">
+          <p class = "title">Feels Like</p>
+          <p class = "value">64&deg;</p>
+        </div>
+        <div class = "humidity">
+          <p class = "title">Humidity</p>
+          <p class = "value">46%</p>
+        </div>
+        <div class = "wind">
+          <p class = "title">Wind</p>
+          <p class = "value">9 mph</p>
+        </div>
+        <div class = "precipitation">
+          <p class = "title">Precipitation</p>
+          <p class = "value">0 in</p>
+        </div>
 
-  Search for a city, e.g., New York
-  Search
+      </div>
+      <div class = "daily-forecast-container">
+        <p class = "legend">
+          Daily Forecast
+        </p>
 
-  Feels like
-  <!-- Insert temperature here -->
+        <div class = "day">
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
 
-  Humidity
-  <!-- Insert humidity here -->
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
 
-  Wind
-  <!-- Insert wind here -->   
-  
-  Precipitation
-  <!-- Insert precipitation here -->
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
 
-  Daily forecast
-  <!-- Insert daily forecast for the next 7 days here -->
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
 
-  Hourly forecast
-  <!-- Insert hourly forecast for the selected day here -->
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
 
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
+
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
+
+          <div class = "daily">
+            <div class = "day-name">Tue</div>
+            <div class = "weather-condition">
+              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
+            </div>
+            <div class = "temperature">
+              <p>68&deg;</p>
+              <p>57&deg;</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class = "right-section">
+      <div class="top-part">
+        <p>Hourly Forecast</p>
+        <div class = "hourly-forecast-dropdown-menu">
+          <div class = "container">
+            <p>Tuesday</p>
+            <img src = "assets/images/icon-dropdown.svg" decoding = "sync" class = "unit-dropdown" aria-hidden = "true">
+          </div>
+        </div>
+      </div>
+
+      <div class = "hourly-forecast-data-container">
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+
+        <div class = "hourly-forecast-data">
+          <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
+          <p>3 PM</p>
+          <p>68&deg;</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <script type = "module" src = "scripts/layout.js"></script>
+
 </body>
 </html>
