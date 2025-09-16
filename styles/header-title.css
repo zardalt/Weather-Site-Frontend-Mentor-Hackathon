@@ -175,4 +175,9 @@ h1 {
   color: var(--white);
   background-color: var(--light-blue);
   cursor: pointer;
+  transition: background-color .15s;
+
+  &:hover {
+    background-color: var(--dark-blue);
+  }
 }

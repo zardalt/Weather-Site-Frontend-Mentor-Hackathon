@@ -130,7 +130,7 @@ main {
   & .right-section {
     background-color: var(--n-800);
     border-radius: .75em;
-    padding: 1.25em 1em;
+    padding: 0 1em 1.25em 1em;
     height: 43em;
     overflow-y: auto;
     margin-bottom: 3em;
@@ -138,14 +138,18 @@ main {
     & .top-part {
       display: flex;
       align-items: center;
-      margin-bottom: 1em;
+      position: sticky;
+      padding-top: 1.25em;
+      padding-bottom: 1em;
+      top: 0;
+      background-color: var(--n-800);
 
       @media (width < 350px) {
         gap: 1.25em;
       }
 
       & .top-title {
-        font-size: 1.25rem;
+        font-size: clamp(1rem, 1.25rem);
         font-weight: 600;
         flex: 1;
       }

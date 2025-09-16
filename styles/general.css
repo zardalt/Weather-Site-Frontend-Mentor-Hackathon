@@ -29,7 +29,7 @@
   --white: hsl(0, 0%, 100%);
   --orange: hsl(28, 100%, 52%);
   --light-blue: hsl(233, 67%, 56%);
-  --blue-dark: hsl(248, 70%, 36%);
+  --dark-blue: hsl(248, 70%, 36%);
   --main-font: 'DM Sans', 'Arial';
   --secondary-font: 'Bric', 'Arial';
   --box-shadow: rgba(2, 1, 44, .32);

@@ -1,0 +1,46 @@
+@media (min-width: 768px) {
+  .input-elem {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .input-wrapper {
+    max-width: 32.875em;
+  }
+
+  main .weather-info {
+    background: url(../assets/images/bg-today-large.svg) no-repeat center;
+    background-size: 100%;
+    flex-direction: row;
+  }
+
+  main .weather-info .location-info {
+    margin: 0;
+    flex: 1;
+    text-align: start;
+  }
+
+  main .weather-details-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  main .daily-forecast-container .day {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  main {
+    flex-direction: row;
+    gap: 2em;
+  }
+
+  main .left-section {
+    flex: 1;
+  }
+
+  main .right-section {
+    min-width: 24em;
+    height: 38.5em;
+  }
+}
