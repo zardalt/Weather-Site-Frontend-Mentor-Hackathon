@@ -1,0 +1,234 @@
+@font-face{
+  font-family: 'DM Sans';
+  src: url(../assets/fonts/DM_Sans/DMSans-VariableFont_opsz\,wght.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 300 700;
+}
+
+@font-face{
+  font-family: 'DM Sans';
+  src: url(../assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz\,wght.ttf) format('truetype');
+  font-style: italic;
+  font-weight: 600;
+}
+
+@font-face{
+  font-family: 'Bric';
+  src: url(../assets/fonts/Bricolage_Grotesque/static/BricolageGrotesque-Bold.ttf) format('truetype');
+  font-style: normal;
+  font-weight: 700;
+}
+
+:root {
+  --n-900: hsl(243, 96%, 9%);
+  --n-800: hsl(243, 27%, 20%);
+  --n-700: hsl(243, 23%, 24%);
+  --n-600: hsl(243, 23%, 30%);
+  --n-300: hsl(240, 6%, 70%);
+  --n-200: hsl(250, 6%, 84%);
+  --white: hsl(0, 0%, 100%);
+  --orange: hsl(28, 100%, 52%);
+  --light-blue: hsl(233, 67%, 56%);
+  --blue-dark: hsl(248, 70%, 36%);
+  --main-font: 'DM Sans', 'Arial';
+  --secondary-font: 'Bric', 'Arial';
+}
+
+html {
+  font-family: var(--main-font);
+  font-size: 1rem;
+  color: var(--white);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+p, body, h1 {
+  margin: 0
+}
+
+body {
+  padding: 1rem 1rem 0 1rem;
+  background-color: var(--n-900);
+}
+
+button {
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  background-color: var(--n-900);
+  height: fit-content;
+  align-items: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 1.75rem;
+}
+
+.switch {
+  position: absolute;
+  right: 0;
+  background-color: var(--n-800);
+  padding: 0.4em 0.5em;
+  border-radius: .75em;
+  border: solid 2px var(--n-600);
+  z-index: 100;
+  display: none;
+
+  & * {
+    margin-bottom: .25em;
+  }
+
+  & button {
+    width: 100%;
+    text-align: left;
+    padding: .6em .5em;
+    border-radius: .5em;
+    background-color: transparent;
+    color: var(--white);
+    border: none;
+    font: var(--main-font) 1rem;
+    
+    &:hover {
+      background-color: var(--n-700);
+    }
+  }
+
+  & .active {
+    position: relative;
+    background-color: var(--n-700);
+  }
+
+  & .active::after {
+    content: url(../assets/images/icon-checkmark.svg);
+    position: absolute;
+    right: 1.2em;
+  }
+
+  & .indi {
+    & p {
+      font-size: .9em;
+      color: var(--n-300);
+      padding: .4em .5em .4em .5em;
+    }
+  }
+
+  & hr {
+    border: 1px solid var(--n-600);
+    margin-block: 0;
+    margin-inline: 0;
+    margin-bottom: .25em;
+  }
+}
+
+.unit-dropdown-menu .container {
+  display: flex;
+  gap: .4em;
+  background-color: var(--n-800);
+  font-size: 0.9rem;
+  padding: .5rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.prompt {
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt-div {
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 3rem;
+}
+
+h1 {
+  font-family: var(--secondary-font);
+  font-weight: 700;
+  font-size: 3.25rem;
+  line-height: 120%;
+}
+
+.input-elem {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+
+.input-wrapper {
+  width: 100%;
+  position: relative;
+  height: fit-content;
+
+  & input {
+    width: 100%;
+    background-color: var(--n-800);
+    border: none;
+    font-family: var(--main-font);
+    font-size: 1.25rem;
+    border-radius: .75em;
+    padding-left: 3.5rem;
+    color: var(--n-200);
+    cursor: pointer;
+
+    &::placeholder {
+      color: var(--n-200);
+    }
+  }
+
+  & img {
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  & .options {
+    position: absolute;
+    right: 0;
+    left: 0;
+    background-color: var(--n-800);
+    border-radius: .75em;
+    top: 4rem;
+    display: flex;
+    flex-direction: column;
+    display: none;
+
+    & .value {
+      padding: 1em 1.25em;
+      font-size: 1.25rem;
+      cursor: pointer;
+
+      &:hover {
+        border: 2px solid var(--n-700);
+        border-radius: .75rem;
+      }
+    }
+  }
+}
+
+.search-place, .search-place-btn {
+  padding: 1rem 1.5rem;
+}
+
+.search-place-btn {
+  border: none;
+  font-family: var(--main-font);
+  font-size: 1.25em;
+  border-radius: .75em;
+  color: var(--white);
+  background-color: var(--light-blue);
+  cursor: pointer;
+}

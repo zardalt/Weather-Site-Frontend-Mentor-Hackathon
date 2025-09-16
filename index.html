@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
 
-  <link rel = "stylesheet" href = "styles/landing-page.css">
+  <link rel = "stylesheet" href = "styles/header/title.css">
+  <link rel = "stylesheet" href = "styles/header/title.css">
   
   <title>Frontend Mentor | Weather app</title>
 
@@ -24,16 +25,55 @@
         <img src = "assets/images/icon-dropdown.svg" decoding = "sync" class = "unit-dropdown" aria-hidden = "true">
       </div>
 
+      <div class = "switch">
+        <button class = "switch-legend">Switch to <span class = "unit">Imperial</span></button>
+
+        <div class = "indi temp">
+          <p>Temperature</p>
+
+          <button class = "active btn-1">Celsius (&deg;C)</button>
+          <button class = "btn-2">Fahrenheit (&deg;F)</button>
+        </div>
+
+        <hr>
+
+        <div class = "indi w-speed">
+          <p>Wind Speed</p>
+
+          <button class = "active btn-1">km/h</button>
+          <button class = "btn-2">mph</button>
+        </div>
+
+        <hr>
+
+        <div class = "indi preci">
+          <p>Precipitation</p>
+
+          <button class = "active btn-1">Millimetres (mm)</button>
+          <button class = "btn-2">Inches (in)</button>
+        </div>
+      </div>
     </div>
   </header>
 
   <section class = "prompt">
     <div class = "prompt-div">
-      <p>How's the sky looking today?</p>
+      <h1>How's the sky looking today?</h1>
     </div>
 
     <div class = "input-elem">
-      <input placeholder = "Search for a place" class = "search-place">
+      <div class = "input-wrapper">
+        <img class="search-icon" src = "assets/images/icon-search.svg" alt = "search-icon" aria-hidden = "true" loading = "eager">
+        <input list = "places" id = "place" placeholder = "Search for a place..." class = "search-place">
+
+        <div class = "options">
+          <a class = "value">City Name</a>
+          <a class = "value">City Name</a>
+          <a class = "value">City Name</a>
+          <a class = "value">City Name</a>
+          <a class = "value">City Name</a>
+        </div>
+      </div>
       <button class = "search-place-btn">Search</button>
     </div>
   </section>
@@ -42,7 +82,7 @@
     <div class = "left-section">
 
       <div class = "weather-info">
-
+        
         <div class = "location-info">
           <p>Berlin, Germany</p>
           <p>Tuesday, Aug 5, 2025</p>
