@@ -25,9 +25,22 @@ header {
   border-radius: .75em;
   border: solid 1px var(--n-600);
   z-index: 100;
-  top: 2.5em;
+  top: 3em;
   box-shadow: 0 .5em 1em var(--box-shadow);
   display: none;
+  transform: scale(.95);
+  opacity: 0;
+  transition: opacity .2s,
+    transform .2s;
+
+  & .switch-legend {
+
+    &:focus {
+      background-color: var(--n-700);
+      box-shadow: 0 0 0 3px var(--n-700),
+      0 0 0 5px var(--white);
+    }
+  }
 
   & * {
     margin-bottom: .25em;
@@ -83,6 +96,17 @@ header {
   padding: .5rem;
   border-radius: 0.4rem;
   cursor: pointer;
+  z-index: 50;
+
+  &:hover {
+    background-color: var(--n-700);
+  }
+
+  &:focus {
+    background-color: var(--n-700);
+    box-shadow: 0 0 0 3px var(--n-900),
+    0 0 0 5px var(--white);
+  }
 }
 
 .prompt {
@@ -128,6 +152,17 @@ h1 {
 
     &::placeholder {
       color: var(--n-200);
+    }
+
+    &:hover {
+      background-color: var(--n-700);
+    }
+
+    &:focus {
+      outline: none;
+      background-color: var(--n-700);
+      box-shadow: 0 0 0 3px var(--n-900),
+      0 0 0 5px var(--white);
     }
   }
 
@@ -176,6 +211,12 @@ h1 {
   background-color: var(--light-blue);
   cursor: pointer;
   transition: background-color .15s;
+
+  &:focus {
+    box-shadow: 0 0 0 3px var(--n-900),
+    0 0 0 5px var(--dark-blue);
+    background-color: var(--dark-blue);
+  }
 
   &:hover {
     background-color: var(--dark-blue);

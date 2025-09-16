@@ -134,6 +134,21 @@ main {
     height: 43em;
     overflow-y: auto;
     margin-bottom: 3em;
+    scrollbar-width: thin;
+    scrollbar-color: #302F4A transparent;
+
+    &::-webkit-scrollbar {
+      width: .25em;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #302F4A;
+      border-radius: .75em;
+    }
 
     & .top-part {
       display: flex;
@@ -158,17 +173,30 @@ main {
         position: relative;
         cursor: pointer;
 
+        & .container {
+
+          &:focus {
+            background-color: var(--n-600);
+            box-shadow: 0 0 0 3px var(--n-800),
+            0 0 0 5px var(--white);
+          }
+        }
+
         & .dropdown {
           position: absolute;
           background-color: var(--n-800);
           border: 1px solid var(--n-600);
-          border-radius: .75em;
+          border-radius: .75rem;
           padding: .5em;
           right: 0;
           left: -60%;
           top: 2.5em;
           box-shadow: 0 .5em 1em var(--box-shadow);
           display: none;
+          transform: scale(.95);
+          opacity: 0;
+          transition: opacity .2s,
+            transform .2s;
 
           & button {
             width: 100%;
