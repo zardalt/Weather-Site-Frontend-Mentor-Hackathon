@@ -43,4 +43,9 @@
     min-width: 24em;
     height: 38.5em;
   }
+
+  body {
+    padding-right: 7em;
+    padding-left: 7em;
+  }
 }

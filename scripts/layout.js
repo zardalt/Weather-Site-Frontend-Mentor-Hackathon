@@ -1,4 +1,5 @@
 import { loading } from './loading.js';
+import { errorState } from './errorState.js';
 
 class DropdownEffects {
   unitsDropdown;
@@ -126,4 +127,6 @@ getWeatherInfo('8.08577', '4.87649', 'celsius', 'kmh', 'mm');
 
 */
 
-loading();
+// loading();
+
+errorState();
