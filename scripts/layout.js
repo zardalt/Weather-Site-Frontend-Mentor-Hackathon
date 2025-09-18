@@ -1,3 +1,5 @@
+import { loading } from './loading.js';
+
 class DropdownEffects {
   unitsDropdown;
   switchDropdown;
@@ -79,3 +81,49 @@ const dayDropdown = new DayDropdown();
     dayDropdown.unitsDropdown.removeEventListener('mouseenter', dayDropdown.showUnitDropdown)
     dayDropdown.unitsDropdown.removeEventListener('mouseleave', dayDropdown.hideUnitDropdown)
   });
+
+
+  // test open meteo geolocation api
+/*
+
+  const temperatureUnit = 'celsius';
+  const windUnit = 'km/h';
+  const precipitation = 'millimetres';
+
+function getStateDetails(state) {
+  let location = state.split(' ').join('+');
+  console.log(location);
+  const f = fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=10&language=en&format=json`).then((r) => {
+    let res = r.json();
+    return res;
+  }).then((res) => {
+    console.log(res);
+    return {
+    stateName: res['results'][0].admin1, 
+    countryName: res['results'][0].country, 
+    longitude: res['results'][0].longitude, 
+    latitude: res['results'][0].latitude
+    };
+  });
+  return f;
+}
+
+async function run() {
+  const stateDetails = await getStateDetails('calabar');
+  console.log(stateDetails);
+}
+run();
+
+function getWeatherInfo(longitude, latitude, temperatureUnit, windUnit, precipitationUnit) {
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&start_date=2025-09-11&end_date=2025-09-17${temperatureUnit ? '&temperature_unit=' + temperatureUnit : ''}${windUnit ? '&wind_speed_unit=' + windUnit : ''}${precipitationUnit ? '&precipitation_unit=' + precipitationUnit : ''}`).then(r => {
+    return r.json();
+  }).then(res => {
+    console.log(res);
+  });
+}
+
+getWeatherInfo('8.08577', '4.87649', 'celsius', 'kmh', 'mm');
+
+*/
+
+loading();
