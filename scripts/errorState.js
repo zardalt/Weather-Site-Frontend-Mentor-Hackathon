@@ -3,7 +3,9 @@ export function errorState() {
     <header>
 
       <div class = "logo">
-        <img src = "assets/images/logo.svg" decoding = "sync">
+        <a href = "index.html">
+          <img src = "assets/images/logo.svg" decoding = "sync">
+        </a>
       </div>
 
       <div class = "unit-dropdown-menu">
@@ -54,7 +56,7 @@ export function errorState() {
       <p>We couldn't connect to the server (API error). Please try again in a few moments.</p>
 
       <div>
-        <button>
+        <button class = "retry-btn">
           <img src = "../assets/images/icon-retry.svg" alt = "retry icon" aria-hidden = "true" loading = "eager" decoding = "sync">
           <p>Retry</p>
         </button>
@@ -63,4 +65,8 @@ export function errorState() {
   `;
 
   document.body.innerHTML = headerCode + errorCode;
+
+  document.querySelector('.retry-btn').addEventListener('click', () => {
+    location.reload();
+  });
 }
