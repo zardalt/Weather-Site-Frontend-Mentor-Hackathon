@@ -278,15 +278,19 @@ class Units {
   unitPrec = document.querySelectorAll('.switch .preci button');
 
   constructor() {
-    this.unitSpan.innerText = this.unit;
+    if (this.unit === 'Metric') this.unitSpan.innerText = 'Imperial';
+    else this.unitSpan.innerText = 'Metric';
     this.switchUnitEvents();
+    this.temperatureSwitch();
+    this.windSwitch();
+    this.precipSwitch();
   }
 
   switchUnitEvents = () => {
     document.querySelector('.switch-legend').addEventListener('click', () => {
       if (this.unit === 'Imperial') {
         this.unit = 'Metric';
-        this.unitSpan.innerText = this.unit;
+        this.unitSpan.innerText = 'Imperial';
         updatePage.windUnit = 'kmh';
         this.unitWind[0].classList.add('active')
         this.unitWind[1].classList.remove('active')
@@ -296,7 +300,7 @@ class Units {
         updatePage.fillInfo();
       } else if (this.unit === 'Metric') {
         this.unit = 'Imperial';
-        this.unitSpan.innerText = this.unit;
+        this.unitSpan.innerText = 'Metric';
         updatePage.windUnit = 'mph';
         this.unitWind[1].classList.add('active')
         this.unitWind[0].classList.remove('active')
@@ -305,6 +309,60 @@ class Units {
         this.unitPrec[0].classList.remove('active')
         updatePage.fillInfo();
       }
+    })
+  }
+
+  temperatureSwitch = () => {
+    this.unitTemp.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        if (index === 0) {
+          updatePage.temperatureUnit = 'celsius';
+          updatePage.fillInfo();
+          this.unitTemp[1].classList.remove('active');
+          this.unitTemp[0].classList.add('active')
+        } else if (index === 1) {
+          updatePage.temperatureUnit = 'fahrenheit';
+          updatePage.fillInfo();
+          this.unitTemp[0].classList.remove('active');
+          this.unitTemp[1].classList.add('active')
+        }
+      })
+    })
+  }
+
+  windSwitch = () => {
+    this.unitWind.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        if (index === 0) {
+          updatePage.windUnit = 'kmh';
+          updatePage.fillInfo();
+          this.unitWind[1].classList.remove('active');
+          this.unitWind[0].classList.add('active')
+        } else if (index === 1) {
+          updatePage.windUnit = 'mph';
+          updatePage.fillInfo();
+          this.unitWind[0].classList.remove('active');
+          this.unitWind[1].classList.add('active')
+        }
+      })
+    })
+  }
+
+  precipSwitch = () => {
+    this.unitPrec.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        if (index === 0) {
+          updatePage.precipitationUnit = 'mm';
+          updatePage.fillInfo();
+          this.unitPrec[1].classList.remove('active');
+          this.unitPrec[0].classList.add('active')
+        } else if (index === 1) {
+          updatePage.precipitationUnit = 'inch';
+          updatePage.fillInfo();
+          this.unitPrec[0].classList.remove('active');
+          this.unitPrec[1].classList.add('active')
+        }
+      })
     })
   }
 }
