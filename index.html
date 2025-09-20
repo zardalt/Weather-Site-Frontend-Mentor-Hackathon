@@ -15,6 +15,10 @@
   <title>Frontend Mentor | Weather app</title>
 
 </head>
+<script type = "module">
+  import { loading } from './scripts/loading.js';
+  loading();
+</script>
 <body>
   <header>
 
@@ -32,7 +36,7 @@
       </div>
 
       <div class = "switch">
-        <button class = "switch-legend">Switch to <span class = "unit">Imperial</span></button>
+        <button class = "switch-legend">Switch to <span class = "unit"></span></button>
 
         <div class = "indi temp">
           <p>Temperature</p>
@@ -72,13 +76,7 @@
         <img class="search-icon" src = "assets/images/icon-search.svg" alt = "search-icon" aria-hidden = "true" loading = "eager">
         <input placeholder = "Search for a place..." class = "search-place">
 
-        <div class = "options">
-          <a class = "value">City Name</a>
-          <a class = "value">City Name</a>
-          <a class = "value">City Name</a>
-          <a class = "value">City Name</a>
-          <a class = "value">City Name</a>
-        </div>
+        <div class = "options"></div>
       </div>
       <button class = "search-place-btn">Search</button>
     </div>
@@ -123,84 +121,7 @@
           Daily Forecast
         </p>
 
-        <div class = "day">
-          <div class = "daily">
-            <div class = "day-name">Tue</div>
-            <div class = "weather-condition">
-              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
-            </div>
-            <div class = "temperature">
-              <p class = "min">68&deg;</p>
-              <p class = "max">57&deg;</p>
-            </div>
-          </div>
-
-          <div class = "daily">
-            <div class = "day-name">Tue</div>
-            <div class = "weather-condition">
-              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
-            </div>
-            <div class = "temperature">
-              <p>68&deg;</p>
-              <p>57&deg;</p>
-            </div>
-          </div>
-
-          <div class = "daily">
-            <div class = "day-name">Tue</div>
-            <div class = "weather-condition">
-              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
-            </div>
-            <div class = "temperature">
-              <p>68&deg;</p>
-              <p>57&deg;</p>
-            </div>
-          </div>
-
-          <div class = "daily">
-            <div class = "day-name">Tue</div>
-            <div class = "weather-condition">
-              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
-            </div>
-            <div class = "temperature">
-              <p>68&deg;</p>
-              <p>57&deg;</p>
-            </div>
-          </div>
-
-          <div class = "daily">
-            <div class = "day-name">Tue</div>
-            <div class = "weather-condition">
-              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
-            </div>
-            <div class = "temperature">
-              <p>68&deg;</p>
-              <p>57&deg;</p>
-            </div>
-          </div>
-
-          <div class = "daily">
-            <div class = "day-name">Tue</div>
-            <div class = "weather-condition">
-              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
-            </div>
-            <div class = "temperature">
-              <p>68&deg;</p>
-              <p>57&deg;</p>
-            </div>
-          </div>
-
-          <div class = "daily">
-            <div class = "day-name">Tue</div>
-            <div class = "weather-condition">
-              <img src = "assets/images/icon-fog.webp" alt = "foggy" loading = "lazy" decoding = "async">
-            </div>
-            <div class = "temperature">
-              <p>68&deg;</p>
-              <p>57&deg;</p>
-            </div>
-          </div>
-        </div>
+        <div class = "day"></div>
       </div>
     </div>
 
@@ -214,126 +135,18 @@
             </div>
 
             <div class = "dropdown">
-              <button>Monday</button>
-              <button>Monday</button>
-              <button>Monday</button>
-              <button>Monday</button>
-              <button>Monday</button>
-              <button>Monday</button>
-              <button>Monday</button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
+              <button></button>
             </div>
           </div>
         </div>
 
-        <div class = "hourly-forecast-data-container">
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-
-          <div class = "hourly-forecast-data">
-            <img class = "condition" src = "assets/images/icon-partly-cloudy.webp" alt = "partly-cloudy" loading = "eager" decoding = "sync">
-            <p>3 PM</p>
-            <p>68&deg;</p>
-          </div>
-        </div>
+        <div class = "hourly-forecast-data-container"></div>
       </div>
   </main>
 

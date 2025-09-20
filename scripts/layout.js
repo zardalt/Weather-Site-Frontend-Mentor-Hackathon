@@ -2,6 +2,7 @@ import { loading } from './loading.js';
 import { errorState } from './errorState.js';
 import { noSearchResult } from './noSearchResult.js';
 import dayjs from "https://esm.sh/dayjs";
+import { removeLoading } from './loading.js';
 
 class DropdownEffects {
   unitsDropdown;
@@ -85,12 +86,6 @@ const dayDropdown = new DayDropdown();
     dayDropdown.unitsDropdown.removeEventListener('mouseleave', dayDropdown.hideUnitDropdown)
   });
 
-// loading();
-
-// errorState();
-
-// noSearchResult();
-
 
 class Weather {
   place;
@@ -116,7 +111,8 @@ class Weather {
 
 
   constructor(place) {
-    this.place = place;
+    this.place = localStorage.getItem('place') || place;
+    this.setStorage();
     this.fillInfo();
   }
 
@@ -144,47 +140,56 @@ class Weather {
   }
 
   fillInfo = async () => {
-    await this.getStateDetails();
-    const allWeatherInfo = await this.getWeatherInfo();
-
-    // current
-    this.currentWeatherDetails.precipitation = allWeatherInfo.current.precipitation; 
-    this.currentWeatherDetails.temperature = allWeatherInfo.current.temperature;
-    this.currentWeatherDetails.humidity = allWeatherInfo.current.relative_humidity_2m;
-    this.currentWeatherDetails.windSpeed = allWeatherInfo.current.wind_speed_10m;
-    this.currentWeatherDetails.weatherCode = allWeatherInfo.current.weather_code;
-
-    // daily
-    const d = allWeatherInfo.daily
-    for (let i = 0; i < 7; i++) {
-      this.dailyForecast.push(
-        {
-          day: dayjs(d.time[i]).format('ddd'),
-          weatherCode: d.weather_code[i],
-          minTemperature: d.temperature_2m_min[i],
-          maxTemperature: d.temperature_2m_max[i]
-        }
-      )
+    loading();
+    let allWeatherInfo;
+    try {
+      await this.getStateDetails();
+      allWeatherInfo = await this.getWeatherInfo();
+    } catch {
+      errorState();
     }
 
-    // hourly
-    const h = allWeatherInfo.hourly;
-    for (let i = 0; i < 7; i++) {
-      let counter = 24 * i;
-      const day = [
-        dayjs(h.time[counter]).format('dddd')
-      ];
-      for (let j = 0; j < 24; j++) {
-        day.push({
-          weatherCode: h.weather_code[counter + j],
-          time: dayjs(h.time[counter + j]).format('h A'),
-          temperature: h.temperature_2m[counter + j]
-        })
+    if (allWeatherInfo) {
+      // current
+      this.currentWeatherDetails.precipitation = allWeatherInfo.current.precipitation; 
+      this.currentWeatherDetails.temperature = allWeatherInfo.current.temperature;
+      this.currentWeatherDetails.humidity = allWeatherInfo.current.relative_humidity_2m;
+      this.currentWeatherDetails.windSpeed = allWeatherInfo.current.wind_speed_10m;
+      this.currentWeatherDetails.weatherCode = allWeatherInfo.current.weather_code;
+
+      // daily
+      const d = allWeatherInfo.daily
+      for (let i = 0; i < 7; i++) {
+        this.dailyForecast.push(
+          {
+            day: dayjs(d.time[i]).format('ddd'),
+            weatherCode: d.weather_code[i],
+            minTemperature: d.temperature_2m_min[i],
+            maxTemperature: d.temperature_2m_max[i]
+          }
+        )
       }
-      this.hourlyForecast.push(day);
-    }
 
-    this.updatePage();
+      // hourly
+      const h = allWeatherInfo.hourly;
+      for (let i = 0; i < 7; i++) {
+        let counter = 24 * i;
+        const day = [
+          dayjs(h.time[counter]).format('dddd')
+        ];
+        for (let j = 0; j < 24; j++) {
+          day.push({
+            weatherCode: h.weather_code[counter + j],
+            time: dayjs(h.time[counter + j]).format('h A'),
+            temperature: h.temperature_2m[counter + j]
+          })
+        }
+        this.hourlyForecast.push(day);
+      }
+
+      removeLoading();
+      this.updatePage();
+    }
   }
 
   mapping = (code) => {
@@ -200,7 +205,7 @@ class Weather {
   updatePage = () => {
     // current weather info
     document.querySelector('.location-info .location').innerHTML = `${this.location}, ${this.countryName}`;
-    document.querySelector('.location-info .date').innerHTML = dayjs().format('dddd, MMM d, YYYY');
+    document.querySelector('.location-info .date').innerHTML = dayjs().format('dddd, MMM D, YYYY');
     document.querySelector('.weather-info .temperature-container').innerHTML = `
       <img src = ${this.mapping(this.currentWeatherDetails.weatherCode)} alt = "sunny" loading = "lazy" decoding = "async">
       <p>${this.currentWeatherDetails.temperature}${this.mapUnits('temperature')}</p>
@@ -242,16 +247,19 @@ class Weather {
           <p>${displayDay[i].time}</p>
           <p>${displayDay[i].temperature + this.mapUnits('temperature')}</p>
         </div>
-      ` 
+      ` ;
     }
+    call();
   }
 
-  mapDays = () => {
+  mapDays = (request) => {
     const days = [];
     for (let i = 0; i < 7; i++) {
       days.push(this.hourlyForecast[i][0])
     }
+    if (!request) {
     return days.indexOf(this.hourlyForecastDay);
+    } else return days;
   }
 
   mapUnits = (option) => {
@@ -266,12 +274,16 @@ class Weather {
       else return ' in'
     }
   }
+
+  setStorage = () => {
+    localStorage.setItem('place', this.place);
+  }
 }
 
-const updatePage = new Weather('uyo');
+const updatePage = new Weather();
 
 class Units {
-  unit = 'Metric';
+  unit = localStorage.getItem('unit');
   unitSpan = document.querySelector('.switch-legend .unit');
   unitTemp = document.querySelectorAll('.switch .temp button');
   unitWind = document.querySelectorAll('.switch .w-speed button');
@@ -284,12 +296,14 @@ class Units {
     this.temperatureSwitch();
     this.windSwitch();
     this.precipSwitch();
+    this.setStorage();
   }
 
   switchUnitEvents = () => {
     document.querySelector('.switch-legend').addEventListener('click', () => {
       if (this.unit === 'Imperial') {
         this.unit = 'Metric';
+        this.setStorage();
         this.unitSpan.innerText = 'Imperial';
         updatePage.windUnit = 'kmh';
         this.unitWind[0].classList.add('active')
@@ -300,6 +314,7 @@ class Units {
         updatePage.fillInfo();
       } else if (this.unit === 'Metric') {
         this.unit = 'Imperial';
+        this.setStorage();
         this.unitSpan.innerText = 'Metric';
         updatePage.windUnit = 'mph';
         this.unitWind[1].classList.add('active')
@@ -365,6 +380,176 @@ class Units {
       })
     })
   }
+
+  setStorage = () => {
+    localStorage.setItem('unit', this.unit);
+  }
 }
 
 const units = new Units();
+
+class Search{
+  name;
+  searchInput = document.querySelector('.search-place');
+  displaySearch = document.querySelector('.options');
+  searchBtn = document.querySelector('.search-place-btn');
+
+  constructor() {
+    this.searchEvents();
+    this.searchBtnEvent();
+  }
+
+  searching = () => {
+    this.displaySearch.innerHTML = `
+          <div class = "value js-value">
+            <div class = "div">
+              <img src = "../assets/images/icon-loading.svg" aria-hidden loading = "eager" decoding = "sync">
+            </div>
+            <p>Search in progress</p>
+          </div>
+        `;
+        const d = document.querySelector('.div').style;
+        const j = document.querySelector('.js-value').style;
+        d.height = "fit-content";
+        d.width = "fit-content";
+        j.display = "flex";
+        j.gap = (10 / 16) + 'rem';
+        j.cursor = "wait";
+        document.querySelector('.js-value p').style.fontSize = "1rem";
+        const i = document.querySelector('.value .div img')
+        i.animate([
+          { transform: "rotate(0deg)" },
+          { transform: "rotate(360deg)" }
+        ],
+        {
+          duration: 1000,
+          iterations: Infinity,
+          fill: "forwards"
+        }
+    );
+    i.style.position = "static"
+  }
+
+  searchEvents = () => {
+    this.searchInput.addEventListener('input', async () => {
+      if (this.searchInput.value.length > 0) {
+        this.displaySearch.style.display = "flex";
+        this.searching();
+        const inputVal = this.searchInput.value.split(' ').join('+');
+        const name = await this.getObj(inputVal);
+        if (name && name.length !== 0) {
+          this.displaySearch.innerHTML = `
+          <div class = "value">
+            <button class = "name">${name}</button>
+          </div>
+          `;
+
+          const a = document.querySelector('.value .name');
+          a.style.width = "100%";
+          a.addEventListener('click', () => {
+            updatePage.place = name;
+            updatePage.setStorage();
+            new Weather();
+            this.displaySearch.style.display = "none";
+            this.searchInput.value = '';
+          })
+        } else {
+          this.displaySearch.innerHTML = `
+          <div class = "value">
+            <p class = "name">Nothing to show here</p>
+          </div>
+          `;
+        }
+      }
+    });
+    const task = () => {
+      this.displaySearch.innerHTML = '';
+    }
+
+    this.searchInput.addEventListener('blur', task);
+
+    document.querySelector('.options').addEventListener('mouseenter', () => {
+      this.searchInput.removeEventListener('blur', task);
+    })
+
+    document.querySelector('.options').addEventListener('mouseleave', () => {
+      this.searchInput.addEventListener('blur', task);
+    })
+  }
+
+  getObj = (inputVal) => {
+    const f = fetch(`https://api.api-ninjas.com/v1/city?name=${inputVal}`, {
+      method: 'GET',
+      headers: {
+        'X-Api-Key': 'NL6Tn58I5ldjrDPiRR7Zng==6fHUxLROC3WcFpPC'
+      }
+    }).then(res => {
+      return res.json();
+    }).then(r => {
+      try {
+      return r[0].name;
+      } catch { return; }
+    })
+    return f;
+  }
+
+  searchBtnEvent = () => {
+    this.searchBtn.addEventListener('click', () => {
+      const val = this.searchInput.value;
+      fetch(`https://api.opencagedata.com/geocode/v1/json?q=${val}&key=6ba678eee725467a979c65de9f619466&language=en&pretty=1`).then(res => {
+        return res.json();
+      }).then(r => {
+        return r.results;
+      }).then(results => {
+        if (results.length !== 0) {
+          this.displaySearch.innerHTML = '';
+          results.forEach(result => {
+            if (result.components._normalized_city) {
+              if (result.components.state) {
+            this.displaySearch.innerHTML += `
+              <div class = "value">
+                <button data-state = "${result.components.state}" class = "name">${result.components._normalized_city + `, ${result.components.country}`}</button>
+              </div>
+            `;
+              } else {
+                this.displaySearch.innerHTML += `
+                  <div class = "value">
+                    <button data-state = "${result.components.county}" class = "name">${result.components._normalized_city + `, ${result.components.country}`}</button>
+                  </div>
+                `;
+              }
+            }
+          })
+
+          document.querySelectorAll('.value button').forEach(btn => {
+            btn.addEventListener('click', () => {
+              updatePage.place = (btn.dataset.state.split(' '))[0];
+              updatePage.setStorage();
+              new Weather();
+              this.displaySearch.innerHTML = '';
+            })
+          })
+      } else noSearchResult();
+      })
+    })
+  }
+}
+
+const search = new Search();
+
+function call() {
+  const d = document.querySelectorAll('.hourly-forecast-dropdown-menu .dropdown button');
+  const p = document.querySelector('.hourly-forecast-dropdown-menu .container p')
+
+  const days = updatePage.mapDays(true);
+
+  p.innerHTML = updatePage.hourlyForecastDay;
+  d.forEach((btn, index) => {
+    btn.innerHTML = days[index];
+
+    btn.addEventListener('click', () => {
+      updatePage.hourlyForecastDay = btn.innerHTML;
+      updatePage.fillInfo();
+    });
+  });
+}
