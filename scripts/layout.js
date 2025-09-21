@@ -3,6 +3,7 @@ import { errorState } from './errorState.js';
 import { noSearchResult } from './noSearchResult.js';
 import dayjs from "https://esm.sh/dayjs";
 import { removeLoading } from './loading.js';
+import { removeNoSearchResult } from './noSearchResult.js';
 
 class DropdownEffects {
   unitsDropdown;
@@ -88,11 +89,10 @@ const dayDropdown = new DayDropdown();
 
 
 class Weather {
-  place;
-  location;
-  countryName;
-  longitude;
-  latitude;
+  location = localStorage.getItem('loc');
+  countryName = localStorage.getItem('cou');
+  longitude = localStorage.getItem('lon');
+  latitude = localStorage.getItem('lat');
   todaysDate = dayjs().format('YYYY-MM-DD');
   oneWeek = dayjs().add(6, 'days').format('YYYY-MM-DD');
   temperatureUnit = 'celsius';
@@ -108,46 +108,55 @@ class Weather {
   dailyForecast = [];
   hourlyForecast = [];
   hourlyForecastDay = dayjs().format('dddd');
+  noSearch = false;
 
 
-  constructor(place) {
-    this.place = localStorage.getItem('place') || place;
-    this.setStorage();
+  constructor() {
     this.fillInfo();
   }
 
-  getStateDetails = () => {
-    let location = this.place.split(' ').join('+');
-    const f = fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=10&language=en&format=json`).then((r) => {
-      let res = r.json();
-      return res;
-    }).then((res) => {
-      this.location = res['results'][0].admin1, 
-      this.countryName = res['results'][0].country, 
-      this.longitude = res['results'][0].longitude, 
-      this.latitude = res['results'][0].latitude
+  getUserLocation = async () => {
+    try {
+    await fetch("http://ip-api.com/json/").then((res) => {
+      return res.json();
+    }).then((r) => {
+      this.location = r.regionName;
+      this.countryName = r.country;
+      this.latitude = r.lat;
+      this.longitude = r.lon;
+    }).then(() => {
+      this.fillInfo();
     });
-    return f;
+  } catch {
+    errorState();
+  }
   }
 
-  getWeatherInfo() {
-    const f = fetch(`https://api.open-meteo.com/v1/forecast?latitude=${this.latitude}&longitude=${this.longitude}&current=weather_code,temperature,relative_humidity_2m,precipitation,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&start_date=${this.todaysDate}&end_date=${this.oneWeek}${this.temperatureUnit ? '&temperature_unit=' + this.temperatureUnit : ''}${this.windUnit ? '&wind_speed_unit=' + this.windUnit : ''}${this.precipitationUnit ? '&precipitation_unit=' + this.precipitationUnit : ''}`).then(r => {
+  async getWeatherInfo() {
+    if (!this.noSearch) {
+      let f;
+    try {
+       f = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${this.latitude}&longitude=${this.longitude}&current=weather_code,temperature,relative_humidity_2m,precipitation,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&start_date=${this.todaysDate}&end_date=${this.oneWeek}${this.temperatureUnit ? '&temperature_unit=' + this.temperatureUnit : ''}${this.windUnit ? '&wind_speed_unit=' + this.windUnit : ''}${this.precipitationUnit ? '&precipitation_unit=' + this.precipitationUnit : ''}`).then(r => {
       return r.json();
-    }).then(res => {
-      return res;
-    });
+      }).then(res => {
+        return res;
+      });
+      } catch {
+        errorState();
+      }
     return f;
+    }
   }
 
   fillInfo = async () => {
     loading();
     let allWeatherInfo;
-    try {
-      await this.getStateDetails();
-      allWeatherInfo = await this.getWeatherInfo();
-    } catch {
-      errorState();
-    }
+      if (this.countryName && this.latitude && this.longitude) {
+        allWeatherInfo = await this.getWeatherInfo();
+      } else{
+        await this.getUserLocation();
+      }
+      this.setStorage();
 
     if (allWeatherInfo) {
       // current
@@ -204,7 +213,8 @@ class Weather {
 
   updatePage = () => {
     // current weather info
-    document.querySelector('.location-info .location').innerHTML = `${this.location}, ${this.countryName}`;
+    console.log(this.location);
+    document.querySelector('.location-info .location').innerHTML = `${this.location !== 'undefined' ? this.location + ',' : ''} ${this.countryName}`;
     document.querySelector('.location-info .date').innerHTML = dayjs().format('dddd, MMM D, YYYY');
     document.querySelector('.weather-info .temperature-container').innerHTML = `
       <img src = ${this.mapping(this.currentWeatherDetails.weatherCode)} alt = "sunny" loading = "lazy" decoding = "async">
@@ -276,14 +286,19 @@ class Weather {
   }
 
   setStorage = () => {
-    localStorage.setItem('place', this.place);
+    if (this.latitude && this.longitude && this.countryName) {
+    localStorage.setItem('lon', this.longitude);
+    localStorage.setItem('lat', this.latitude);
+    localStorage.setItem('loc', this.location);
+    localStorage.setItem('cou', this.countryName);
+    }
   }
 }
 
 const updatePage = new Weather();
 
 class Units {
-  unit = localStorage.getItem('unit');
+  unit = 'Metric';
   unitSpan = document.querySelector('.switch-legend .unit');
   unitTemp = document.querySelectorAll('.switch .temp button');
   unitWind = document.querySelectorAll('.switch .w-speed button');
@@ -302,6 +317,7 @@ class Units {
   switchUnitEvents = () => {
     document.querySelector('.switch-legend').addEventListener('click', () => {
       if (this.unit === 'Imperial') {
+        console.log('i')
         this.unit = 'Metric';
         this.setStorage();
         this.unitSpan.innerText = 'Imperial';
@@ -313,6 +329,7 @@ class Units {
         this.unitPrec[1].classList.remove('active')
         updatePage.fillInfo();
       } else if (this.unit === 'Metric') {
+        console.log('m')
         this.unit = 'Imperial';
         this.setStorage();
         this.unitSpan.innerText = 'Metric';
@@ -395,7 +412,6 @@ class Search{
   searchBtn = document.querySelector('.search-place-btn');
 
   constructor() {
-    this.searchEvents();
     this.searchBtnEvent();
   }
 
@@ -430,107 +446,61 @@ class Search{
     i.style.position = "static"
   }
 
-  searchEvents = () => {
-    this.searchInput.addEventListener('input', async () => {
-      if (this.searchInput.value.length > 0) {
-        this.displaySearch.style.display = "flex";
-        this.searching();
-        const inputVal = this.searchInput.value.split(' ').join('+');
-        const name = await this.getObj(inputVal);
-        if (name && name.length !== 0) {
-          this.displaySearch.innerHTML = `
-          <div class = "value">
-            <button class = "name">${name}</button>
-          </div>
-          `;
-
-          const a = document.querySelector('.value .name');
-          a.style.width = "100%";
-          a.addEventListener('click', () => {
-            updatePage.place = name;
-            updatePage.setStorage();
-            new Weather();
-            this.displaySearch.style.display = "none";
-            this.searchInput.value = '';
-          })
-        } else {
-          this.displaySearch.innerHTML = `
-          <div class = "value">
-            <p class = "name">Nothing to show here</p>
-          </div>
-          `;
-        }
-      }
-    });
-    const task = () => {
-      this.displaySearch.innerHTML = '';
-    }
-
-    this.searchInput.addEventListener('blur', task);
-
-    document.querySelector('.options').addEventListener('mouseenter', () => {
-      this.searchInput.removeEventListener('blur', task);
-    })
-
-    document.querySelector('.options').addEventListener('mouseleave', () => {
-      this.searchInput.addEventListener('blur', task);
-    })
-  }
-
-  getObj = (inputVal) => {
-    const f = fetch(`https://api.api-ninjas.com/v1/city?name=${inputVal}`, {
-      method: 'GET',
-      headers: {
-        'X-Api-Key': 'NL6Tn58I5ldjrDPiRR7Zng==6fHUxLROC3WcFpPC'
-      }
-    }).then(res => {
-      return res.json();
-    }).then(r => {
-      try {
-      return r[0].name;
-      } catch { return; }
-    })
-    return f;
-  }
-
   searchBtnEvent = () => {
-    this.searchBtn.addEventListener('click', () => {
+    this.searchBtn.addEventListener('click', async () => {
+      this.displaySearch.style.display = "flex";
+        this.searching();
       const val = this.searchInput.value;
-      fetch(`https://api.opencagedata.com/geocode/v1/json?q=${val}&key=6ba678eee725467a979c65de9f619466&language=en&pretty=1`).then(res => {
+      try {
+        await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${val}&count=10&language=en&format=json`).then(res => {
         return res.json();
       }).then(r => {
-        return r.results;
+        if (r.results) return r.results;
+        else {console.log(r); noSearchResult(); this.displaySearch.innerHTML = ''}
       }).then(results => {
-        if (results.length !== 0) {
+        if (results && results.length !== 0) {
           this.displaySearch.innerHTML = '';
           results.forEach(result => {
-            if (result.components._normalized_city) {
-              if (result.components.state) {
+            if (result.name && result.name !== result.country) {
+              console.log(result);
             this.displaySearch.innerHTML += `
               <div class = "value">
-                <button data-state = "${result.components.state}" class = "name">${result.components._normalized_city + `, ${result.components.country}`}</button>
+                <button data-name = "${result.name}" data-country = "${result.country}" data-lat = "${result.latitude}" data-lon = "${result.longitude}"  class = "name">${result.name + `${result.admin1 ? ', ' + result.admin1 : ''}` + `, ${result.country}`}</button>
               </div>
             `;
-              } else {
-                this.displaySearch.innerHTML += `
-                  <div class = "value">
-                    <button data-state = "${result.components.county}" class = "name">${result.components._normalized_city + `, ${result.components.country}`}</button>
-                  </div>
-                `;
-              }
-            }
+            } else if (result.country) {
+              this.displaySearch.innerHTML += `
+              <div class = "value">
+                <button data-country = "${result.country}" data-lat = "${result.latitude}" data-lon = "${result.longitude}" class = "name">${result.country}</button>
+              </div>
+            `;
+            } else;
           })
 
           document.querySelectorAll('.value button').forEach(btn => {
             btn.addEventListener('click', () => {
-              updatePage.place = (btn.dataset.state.split(' '))[0];
-              updatePage.setStorage();
-              new Weather();
-              this.displaySearch.innerHTML = '';
+              if (updatePage.noSearch) {
+                removeNoSearchResult();
+              } 
+                const b = btn.dataset;
+                updatePage.location = b.name ? b.name : undefined;
+                updatePage.countryName = b.country;
+                updatePage.latitude = b.lat;
+                updatePage.longitude = b.lon;
+                console.log(b);
+                updatePage.setStorage();
+                new Weather(updatePage.place);
+                this.displaySearch.innerHTML = '';
             })
           })
-      } else noSearchResult();
+      } else {
+        noSearchResult();
+        updatePage.noSearch = true;
+      }
       })
+    } catch {
+      errorState();
+    }
     })
   }
 }
