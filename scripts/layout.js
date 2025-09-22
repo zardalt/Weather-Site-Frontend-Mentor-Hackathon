@@ -202,13 +202,13 @@ class Weather {
   }
 
   mapping = (code) => {
-    if (code >= 0 && code <= 2) return '../assets/images/icon-partly-cloudy.webp';
-    else if (code === 3) return '../assets/images/icon-overcast.webp'
-    else if (code === 45 || code === 48) return '../assets/images/icon-fog.webp'
-    else if (code >= 51 && code <= 57) return '../assets/images/icon-drizzle.webp' 
-    else if ((code > 60 && code < 68) || (code > 79 &&  code < 87)) return '../assets/images/icon-rain.webp'
-    else if (code > 70 &&  code < 78) return '../assets/images/icon-snow.webp'
-    else if (code > 94 &&  code < 100) return '../assets/images/icon-storm.webp'
+    if (code >= 0 && code <= 2) return 'assets/images/icon-partly-cloudy.webp';
+    else if (code === 3) return 'assets/images/icon-overcast.webp'
+    else if (code === 45 || code === 48) return 'assets/images/icon-fog.webp'
+    else if (code >= 51 && code <= 57) return 'assets/images/icon-drizzle.webp' 
+    else if ((code > 60 && code < 68) || (code > 79 &&  code < 87)) return 'assets/images/icon-rain.webp'
+    else if (code > 70 &&  code < 78) return 'assets/images/icon-snow.webp'
+    else if (code > 94 &&  code < 100) return 'assets/images/icon-storm.webp'
   }
 
   updatePage = () => {
