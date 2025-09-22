@@ -19,12 +19,12 @@ export function removeNoSearchResult() {
       <div class = "weather-info">
         
         <div class = "location-info">
-          <p class = "location">Berlin, Germany</p>
-          <p class = "date">Tuesday, Aug 5, 2025</p>
+          <p class = "location"></p>
+          <p class = "date"></p>
         </div>
         <div class = "temperature-container">
           <img src = "assets/images/icon-sunny.webp" alt = "sunny" loading = "lazy" decoding = "async">
-          <p>68&deg;</p>
+          <p></p>
         </div>
 
       </div>

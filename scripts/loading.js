@@ -128,7 +128,7 @@ export function removeLoading() {
         <p>68&deg;</p>
       </div>
     `;
-    changeableItems[0].style.background = 'url(../assets/images/bg-today-small.svg) no-repeat center';
+    changeableItems[0].style.background = 'url(assets/images/bg-today-small.svg) no-repeat center';
     changeableItems[0].style.backgroundSize = "100%";
     changeableItems[0].style.height = `fit-content`;
   }
