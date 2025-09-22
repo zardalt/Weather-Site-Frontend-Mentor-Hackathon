@@ -50,6 +50,16 @@
   }
 }
 
+@media (width < 430px) {
+  main .weather-info {
+    padding: 0;
+
+    & .temperature-container p {
+      font-size: 4rem;
+    }
+  }
+} 
+
 /*
 body {
   background-color: var(--n-200);
