@@ -213,7 +213,6 @@ class Weather {
 
   updatePage = () => {
     // current weather info
-    console.log(this.location);
     document.querySelector('.location-info .location').innerHTML = `${this.location !== 'undefined' ? this.location + ',' : ''} ${this.countryName}`;
     document.querySelector('.location-info .date').innerHTML = dayjs().format('dddd, MMM D, YYYY');
     document.querySelector('.weather-info .temperature-container').innerHTML = `
@@ -317,7 +316,6 @@ class Units {
   switchUnitEvents = () => {
     document.querySelector('.switch-legend').addEventListener('click', () => {
       if (this.unit === 'Imperial') {
-        console.log('i')
         this.unit = 'Metric';
         this.setStorage();
         this.unitSpan.innerText = 'Imperial';
@@ -329,7 +327,6 @@ class Units {
         this.unitPrec[1].classList.remove('active')
         updatePage.fillInfo();
       } else if (this.unit === 'Metric') {
-        console.log('m')
         this.unit = 'Imperial';
         this.setStorage();
         this.unitSpan.innerText = 'Metric';
@@ -448,6 +445,7 @@ class Search{
 
   searchBtnEvent = () => {
     this.searchBtn.addEventListener('click', async () => {
+      if (this.searchInput.value.length > 0) {
       this.displaySearch.style.display = "flex";
         this.searching();
       const val = this.searchInput.value;
@@ -456,13 +454,12 @@ class Search{
         return res.json();
       }).then(r => {
         if (r.results) return r.results;
-        else {console.log(r); noSearchResult(); this.displaySearch.innerHTML = ''}
+        else {noSearchResult(); this.displaySearch.innerHTML = ''}
       }).then(results => {
         if (results && results.length !== 0) {
           this.displaySearch.innerHTML = '';
           results.forEach(result => {
             if (result.name && result.name !== result.country) {
-              console.log(result);
             this.displaySearch.innerHTML += `
               <div class = "value">
                 <button data-name = "${result.name}" data-country = "${result.country}" data-lat = "${result.latitude}" data-lon = "${result.longitude}"  class = "name">${result.name + `${result.admin1 ? ', ' + result.admin1 : ''}` + `, ${result.country}`}</button>
@@ -487,7 +484,6 @@ class Search{
                 updatePage.countryName = b.country;
                 updatePage.latitude = b.lat;
                 updatePage.longitude = b.lon;
-                console.log(b);
                 updatePage.setStorage();
                 new Weather(updatePage.place);
                 this.displaySearch.innerHTML = '';
@@ -501,6 +497,12 @@ class Search{
     } catch {
       errorState();
     }
+      } else {
+        this.searchInput.placeholder = "Please type something"
+        setTimeout(() => {
+          this.searchInput.placeholder = "Search for a place..."
+        }, 5000)
+      }
     })
   }
 }

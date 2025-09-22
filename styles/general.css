@@ -33,6 +33,8 @@
   --main-font: 'DM Sans', 'Arial';
   --secondary-font: 'Bric', 'Arial';
   --box-shadow: rgba(2, 1, 44, .32);
+
+  color-scheme: light dark;
 }
 
 html {
