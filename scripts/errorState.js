@@ -49,7 +49,7 @@ export function errorState() {
 
   const errorCode = `
     <div class = "error-container">
-      <img src = "../assets/images/icon-error.svg" alt = "error icon" aria-hidden = "true" loading = "eager" decoding = "sync">
+      <img src = "assets/images/icon-error.svg" alt = "error icon" aria-hidden = "true" loading = "eager" decoding = "sync">
 
       <h1>Something went wrong</h1>
 
@@ -57,7 +57,7 @@ export function errorState() {
 
       <div>
         <button class = "retry-btn">
-          <img src = "../assets/images/icon-retry.svg" alt = "retry icon" aria-hidden = "true" loading = "eager" decoding = "sync">
+          <img src = "assets/images/icon-retry.svg" alt = "retry icon" aria-hidden = "true" loading = "eager" decoding = "sync">
           <p>Retry</p>
         </button>
       </div>

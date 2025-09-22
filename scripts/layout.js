@@ -416,7 +416,7 @@ class Search{
     this.displaySearch.innerHTML = `
           <div class = "value js-value">
             <div class = "div">
-              <img src = "../assets/images/icon-loading.svg" aria-hidden loading = "eager" decoding = "sync">
+              <img src = "assets/images/icon-loading.svg" aria-hidden loading = "eager" decoding = "sync">
             </div>
             <p>Search in progress</p>
           </div>
