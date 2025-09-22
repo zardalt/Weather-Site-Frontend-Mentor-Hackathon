@@ -117,13 +117,13 @@ class Weather {
 
   getUserLocation = async () => {
     try {
-    await fetch("http://ip-api.com/json/").then((res) => {
+    await fetch("https://ipapi.co/json/").then((res) => {
       return res.json();
     }).then((r) => {
-      this.location = r.regionName;
-      this.countryName = r.country;
-      this.latitude = r.lat;
-      this.longitude = r.lon;
+      this.location = r.city;
+      this.countryName = r.country_name;
+      this.latitude = r.latitude;
+      this.longitude = r.longitude;
     }).then(() => {
       this.fillInfo();
     });
