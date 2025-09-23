@@ -46,7 +46,7 @@ main {
       }
 
       p {
-        font-size: clamp(4em, calc(10vw + 3em), 6em);
+        font-size: clamp(2rem, 15vw, 6rem);;
         font-weight: 600;
         font-style: italic;
         letter-spacing: -2%;

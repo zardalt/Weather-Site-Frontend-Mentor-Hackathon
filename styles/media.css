@@ -54,11 +54,43 @@
   main .weather-info {
     padding: 0;
 
-    & .temperature-container p {
-      font-size: 4rem;
+    & .temperature-container{
+
+      & img {
+        height: clamp(20px, 15vw, 95px);
+      }
+      
+      & p {
+      font-size: clamp(1rem, 5vw, 3rem);
     }
   }
+  }
 } 
+
+@media (width < 405px) {
+  main .weather-details-container {
+    grid-template-columns: 1fr;
+  }
+
+  main .daily-forecast-container .day {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width < 300px) {
+  header {
+    flex-direction: column;
+
+    & .unit-dropdown-menu {
+      align-items: center;
+      flex: 1;
+    }
+  }
+
+  .right-section .top-part {
+    flex-direction: column;
+  }
+}
 
 /*
 body {

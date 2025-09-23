@@ -131,6 +131,7 @@ export function removeLoading() {
     changeableItems[0].style.background = 'url(assets/images/bg-today-small.svg) no-repeat center';
     changeableItems[0].style.backgroundSize = "100%";
     changeableItems[0].style.height = `fit-content`;
+    changeableItems[0].style.backgroundFit = "cover";
   }
   const weatherDetailsContainerLoading =() => {
     changeableItems[1].innerHTML = `

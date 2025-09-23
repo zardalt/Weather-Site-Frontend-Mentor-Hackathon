@@ -10,6 +10,7 @@ class DropdownEffects {
   switchDropdown;
   timeoutid;
   timeoutid2;
+  timeoutid3;
   switchBtns;
 
   constructor() {
@@ -27,6 +28,7 @@ class DropdownEffects {
   }
 
   showUnitDropdown = () => {
+    clearTimeout(this.timeoutid3);
     clearInterval(this.timeoutid2);
     this.switchDropdown.style.display = "block";
     this.timeoutid = setTimeout(() => { 
@@ -36,13 +38,15 @@ class DropdownEffects {
   }
 
   hideUnitDropdown = () => {
-    clearInterval(this.timeoutid);
-    this.switchDropdown.style.opacity = "0";
-    this.switchDropdown.style.transform = "scale(.95)";
+    this.timeoutid3 = setTimeout(() => {
+      clearInterval(this.timeoutid);
+      this.switchDropdown.style.opacity = "0";
+      this.switchDropdown.style.transform = "scale(.95)";
 
-    this.timeoutid2 = setTimeout(() => {
-      this.switchDropdown.style.display = "none";
-    }, 200);
+      this.timeoutid2 = setTimeout(() => {
+        this.switchDropdown.style.display = "none";
+      }, 200);
+    }, 500)
   }
 }
 
@@ -52,15 +56,28 @@ const unitDropdown = new DropdownEffects();
 
 unitDropdown.switchBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    unitDropdown.hideUnitDropdown();
+    clearInterval(unitDropdown.timeoutid);
+    unitDropdown.switchDropdown.style.opacity = "0";
+    unitDropdown.switchDropdown.style.transform = "scale(.95)";
+
+    unitDropdown.timeoutid2 = setTimeout(() => {
+      unitDropdown.switchDropdown.style.display = "none";
+    }, 200);
     unitDropdown.unitEvents();
   })
 });
 
-unitDropdown.unitsDropdown.addEventListener('focus', () => {
+unitDropdown.switchDropdown.addEventListener('mouseenter', () => {
+  clearTimeout(unitDropdown.timeoutid3);
   unitDropdown.unitsDropdown.removeEventListener('mouseenter', unitDropdown.showUnitDropdown)
   unitDropdown.unitsDropdown.removeEventListener('mouseleave', unitDropdown.hideUnitDropdown)
-});
+})
+
+unitDropdown.switchDropdown.addEventListener('mouseleave', () => {
+  clearTimeout(unitDropdown.timeoutid3);
+  unitDropdown.hideUnitDropdown();
+  unitDropdown.unitEvents();
+})
 
 class DayDropdown extends DropdownEffects {
   constructor() {
@@ -77,15 +94,27 @@ const dayDropdown = new DayDropdown();
 
   dayDropdown.switchBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      dayDropdown.hideUnitDropdown();
+      dayDropdown.switchDropdown.style.opacity = "0";
+      dayDropdown.switchDropdown.style.transform = "scale(.95)";
+
+      dayDropdown.timeoutid2 = setTimeout(() => {
+        dayDropdown.switchDropdown.style.display = "none";
+      }, 200);
       dayDropdown.unitEvents();
     })
   });
 
-  dayDropdown.unitsDropdown.addEventListener('focus', () => {
+  dayDropdown.switchDropdown.addEventListener('mouseenter', () => {
+    clearTimeout(dayDropdown.timeoutid3);
     dayDropdown.unitsDropdown.removeEventListener('mouseenter', dayDropdown.showUnitDropdown)
     dayDropdown.unitsDropdown.removeEventListener('mouseleave', dayDropdown.hideUnitDropdown)
-  });
+  })
+
+  dayDropdown.switchDropdown.addEventListener('mouseleave', () => {
+    clearTimeout(unitDropdown.timeoutid3);
+    dayDropdown.hideUnitDropdown();
+    dayDropdown.unitEvents();
+  })
 
 
 class Weather {
