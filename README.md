@@ -40,8 +40,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://github.com/zardalt/Weather-Site-Frontend-Mentor-Hackathon)
-- Live Site URL: [Add live site URL here](https://zardalt.github.io/Weather-Site-Frontend-Mentor-Hackathon/)
+- Solution URL: [https://github.com/zardalt/Weather-Site-Frontend-Mentor-Hackathon](https://github.com/zardalt/Weather-Site-Frontend-Mentor-Hackathon)
+- Live Site URL: [https://zardalt.github.io/Weather-Site-Frontend-Mentor-Hackathon](https://zardalt.github.io/Weather-Site-Frontend-Mentor-Hackathon/)
 
 ## My process
 
